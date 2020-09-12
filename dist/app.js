@@ -51,6 +51,8 @@ var _ordenPedidos = _interopRequireDefault(require("./routes/ordenPedidos"));
 
 var _infoProducto = _interopRequireDefault(require("./routes/infoProducto"));
 
+var _rosyOnline = _interopRequireDefault(require("./routes/rosyOnline"));
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -61,33 +63,34 @@ function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj;
 // initialization
 var app = (0, _express["default"])(); // settings
 
-app.engine('ejs', _consolidate["default"].ejs);
-app.set('views', './src/views');
-app.set('view engine', 'ejs');
-app.use(_express["default"]["static"]('./src/img')); // middlewares
+app.engine("ejs", _consolidate["default"].ejs);
+app.set("views", "./src/views");
+app.set("view engine", "ejs");
+app.use(_express["default"]["static"]("./src/img")); // middlewares
 
-app.use((0, _morgan["default"])('dev'));
+app.use((0, _morgan["default"])("dev"));
 app.use((0, _express.json)()); // routes
 
-app.use('/api/infoProductos', _infoProducto["default"]);
-app.use('/api/pedidos', _ordenPedidos["default"]);
-app.use('/api/pictures', _pictures["default"]);
-app.use('/api/payment', _payment["default"]);
-app.use('/api/user', _auth["default"]);
-app.use('/api/search', _search["default"]);
-app.use('/api/municipios', _municipios["default"]);
-app.use('/api/departamentos', _departamentos["default"]);
-app.use('/api/paises', _paises["default"]);
-app.use('/api/regiones', _regiones["default"]);
-app.use('/api/tipoNivelProductos', _tipoNivelProductos["default"]);
-app.use('/api/clases', _clases["default"]);
-app.use('/api/tipoNivelProductosClases', _tipoNivelProductosClases["default"]);
-app.use('/api/sucursales', _sucursales["default"]);
-app.use('/api/inventario/detalle', _inventarioEtiquetaProductoDetalles["default"]);
-app.use('/api/inventario/mayoreo', _inventarioEtiquetaProductoMayoreos["default"]);
-app.use('/api/cambioDolarLempiras', _cambioDolarLempiras["default"]);
-app.use('/api/carritoCompra', _carritoCompra["default"]);
-app.use('/api/carritoCompraDetalle', _carritoCompraDetalle["default"]);
-app.use('/api/carritoCompraMayoreo', _carritoCompraMayoreo["default"]);
+app.use("/api/infoProductos", _infoProducto["default"]);
+app.use("/api/pedidos", _ordenPedidos["default"]);
+app.use("/api/pictures", _pictures["default"]);
+app.use("/api/payment", _payment["default"]);
+app.use("/api/user", _auth["default"]);
+app.use("/api/search", _search["default"]);
+app.use("/api/municipios", _municipios["default"]);
+app.use("/api/departamentos", _departamentos["default"]);
+app.use("/api/paises", _paises["default"]);
+app.use("/api/regiones", _regiones["default"]);
+app.use("/api/tipoNivelProductos", _tipoNivelProductos["default"]);
+app.use("/api/clases", _clases["default"]);
+app.use("/api/tipoNivelProductosClases", _tipoNivelProductosClases["default"]);
+app.use("/api/sucursales", _sucursales["default"]);
+app.use("/api/inventario/detalle", _inventarioEtiquetaProductoDetalles["default"]);
+app.use("/api/inventario/mayoreo", _inventarioEtiquetaProductoMayoreos["default"]);
+app.use("/api/cambioDolarLempiras", _cambioDolarLempiras["default"]);
+app.use("/api/carritoCompra", _carritoCompra["default"]);
+app.use("/api/carritoCompraDetalle", _carritoCompraDetalle["default"]);
+app.use("/api/carritoCompraMayoreo", _carritoCompraMayoreo["default"]);
+app.use("/api/rosyOnline", _rosyOnline["default"]);
 var _default = app;
 exports["default"] = _default;
