@@ -73,6 +73,7 @@ exports.getCortinas = getCortinas;
 exports.getColchas = getColchas;
 exports.getEdredones = getEdredones;
 exports.getMantelesMesa = getMantelesMesa;
+exports.getDescuentos = getDescuentos;
 exports.getPictures = getPictures;
 
 var _rosyOnline = require("../database/rosyOnline");
@@ -3239,26 +3240,71 @@ function _getMantelesMesa() {
   return _getMantelesMesa.apply(this, arguments);
 }
 
-function getPictures(_x141, _x142) {
+function getDescuentos(_x141, _x142) {
+  return _getDescuentos.apply(this, arguments);
+}
+
+function _getDescuentos() {
+  _getDescuentos = _asyncToGenerator(
+  /*#__PURE__*/
+  regeneratorRuntime.mark(function _callee71(req, res) {
+    var getDescuentosQuery, descuentos;
+    return regeneratorRuntime.wrap(function _callee71$(_context71) {
+      while (1) {
+        switch (_context71.prev = _context71.next) {
+          case 0:
+            _context71.prev = 0;
+            getDescuentosQuery = "SELECT A.object_id, A.term_taxonomy_id, A.ID, A.post_date, A.post_content, A.post_title, A.post_excerpt, A.post_status, A.post_name, A.post_type, A.price, B.quantity, C.picture_cover " + "FROM ( " + "SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as price " + "FROM  wp_j8dwsram9m_term_relationships A " + "INNER JOIN wp_j8dwsram9m_posts B " + "ON A.object_id = B.ID " + "INNER JOIN wp_j8dwsram9m_postmeta C " + "ON B.ID = C.post_id " + "WHERE  A.term_taxonomy_id = 1521 " + "AND B.post_type = \"product\" " + "AND B.post_status = \"publish\" " + "AND C.meta_key = \"_price\" " + ") A " + "INNER JOIN ( " + "SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as quantity " + "FROM  wp_j8dwsram9m_term_relationships A " + "INNER JOIN wp_j8dwsram9m_posts B " + "ON A.object_id = B.ID " + "INNER JOIN wp_j8dwsram9m_postmeta C " + "ON B.ID = C.post_id " + "WHERE  A.term_taxonomy_id = 1521 " + "AND B.post_type = \"product\" " + "AND B.post_status = \"publish\" " + "AND C.meta_key = \"_stock\" " + ") B " + "ON A.object_id = B.object_id " + "INNER JOIN ( " + "SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as picture_cover " + "FROM  wp_j8dwsram9m_term_relationships A " + "INNER JOIN wp_j8dwsram9m_posts B " + "ON A.object_id = B.ID " + "INNER JOIN wp_j8dwsram9m_postmeta C " + "ON B.ID = C.post_id " + "WHERE  A.term_taxonomy_id = 1521 " + "AND B.post_type = \"product\" " + "AND B.post_status = \"publish\" " + "AND C.meta_key = \"_thumbnail_id\" " + ") C " + "ON A.object_id = C.object_id";
+            _context71.next = 4;
+            return _rosyOnline.rosyOnline.query(getDescuentosQuery, {
+              plain: false,
+              raw: false,
+              type: _sequelize["default"].QueryTypes.SELECT
+            });
+
+          case 4:
+            descuentos = _context71.sent;
+            res.json({
+              data: (0, _paginatedResults.paginatedResults)(req.query.page, req.query.limit, descuentos)
+            });
+            _context71.next = 11;
+            break;
+
+          case 8:
+            _context71.prev = 8;
+            _context71.t0 = _context71["catch"](0);
+            console.log(_context71.t0);
+
+          case 11:
+          case "end":
+            return _context71.stop();
+        }
+      }
+    }, _callee71, null, [[0, 8]]);
+  }));
+  return _getDescuentos.apply(this, arguments);
+}
+
+function getPictures(_x143, _x144) {
   return _getPictures.apply(this, arguments);
 }
 
 function _getPictures() {
   _getPictures = _asyncToGenerator(
   /*#__PURE__*/
-  regeneratorRuntime.mark(function _callee71(req, res) {
+  regeneratorRuntime.mark(function _callee72(req, res) {
     var ID, urlCover, urlsCarrousel, pictureCoverQuery, pictureCarrouselQuery, pictureCover, pictureCarrousel, idPictureCover, urlPictureCoverQuery, urlPictureCover, urlsPicturesCarrousel, index, urlPictureCarrouselQuery, urlPictureCarrousel, urlPicture;
-    return regeneratorRuntime.wrap(function _callee71$(_context71) {
+    return regeneratorRuntime.wrap(function _callee72$(_context72) {
       while (1) {
-        switch (_context71.prev = _context71.next) {
+        switch (_context72.prev = _context72.next) {
           case 0:
-            _context71.prev = 0;
+            _context72.prev = 0;
             ID = req.params.ID;
             urlCover = "";
             urlsCarrousel = [];
             pictureCoverQuery = "SELECT meta_id, post_id, meta_key, meta_value " + "FROM  wp_j8dwsram9m_postmeta " + "WHERE post_id = ".concat(ID, " AND meta_key = '_thumbnail_id'");
             pictureCarrouselQuery = "SELECT meta_id, post_id, meta_key, meta_value " + "FROM  wp_j8dwsram9m_postmeta " + "WHERE post_id = ".concat(ID, " AND meta_key = '_product_image_gallery'");
-            _context71.next = 8;
+            _context72.next = 8;
             return _rosyOnline.rosyOnline.query(pictureCoverQuery, {
               plain: false,
               raw: false,
@@ -3266,8 +3312,8 @@ function _getPictures() {
             });
 
           case 8:
-            pictureCover = _context71.sent;
-            _context71.next = 11;
+            pictureCover = _context72.sent;
+            _context72.next = 11;
             return _rosyOnline.rosyOnline.query(pictureCarrouselQuery, {
               plain: false,
               raw: false,
@@ -3275,16 +3321,16 @@ function _getPictures() {
             });
 
           case 11:
-            pictureCarrousel = _context71.sent;
+            pictureCarrousel = _context72.sent;
 
             if (!(pictureCover.length > 0)) {
-              _context71.next = 20;
+              _context72.next = 20;
               break;
             }
 
             idPictureCover = parseInt(pictureCover[0].meta_value);
             urlPictureCoverQuery = "SELECT guid " + "FROM wp_j8dwsram9m_posts " + "WHERE ID = ".concat(idPictureCover);
-            _context71.next = 17;
+            _context72.next = 17;
             return _rosyOnline.rosyOnline.query(urlPictureCoverQuery, {
               plain: false,
               raw: false,
@@ -3292,13 +3338,13 @@ function _getPictures() {
             });
 
           case 17:
-            urlPictureCover = _context71.sent;
+            urlPictureCover = _context72.sent;
             urlCover = urlPictureCover[0].guid;
             urlCover = urlCover.replace("https://tiendasrosy.com", "https://secureservercdn.net/198.71.233.135/4b6.96c.myftpupload.com");
 
           case 20:
             if (!(pictureCarrousel.length > 0)) {
-              _context71.next = 39;
+              _context72.next = 39;
               break;
             }
 
@@ -3308,17 +3354,17 @@ function _getPictures() {
 
           case 24:
             if (!(index < urlsCarrousel.length)) {
-              _context71.next = 39;
+              _context72.next = 39;
               break;
             }
 
             if (!(urlsCarrousel[index] !== "")) {
-              _context71.next = 35;
+              _context72.next = 35;
               break;
             }
 
             urlPictureCarrouselQuery = "SELECT guid " + "FROM wp_j8dwsram9m_posts " + "WHERE ID = ".concat(urlsCarrousel[index]);
-            _context71.next = 29;
+            _context72.next = 29;
             return _rosyOnline.rosyOnline.query(urlPictureCarrouselQuery, {
               plain: false,
               raw: false,
@@ -3326,11 +3372,11 @@ function _getPictures() {
             });
 
           case 29:
-            urlPictureCarrousel = _context71.sent;
+            urlPictureCarrousel = _context72.sent;
             urlPicture = urlPictureCarrousel[0].guid;
             urlPicture = urlPicture.replace("https://tiendasrosy.com", "https://secureservercdn.net/198.71.233.135/4b6.96c.myftpupload.com");
             urlsCarrousel[index] = urlPicture;
-            _context71.next = 36;
+            _context72.next = 36;
             break;
 
           case 35:
@@ -3338,7 +3384,7 @@ function _getPictures() {
 
           case 36:
             index++;
-            _context71.next = 24;
+            _context72.next = 24;
             break;
 
           case 39:
@@ -3346,20 +3392,20 @@ function _getPictures() {
               cover: urlCover,
               carrousel: urlsCarrousel
             });
-            _context71.next = 45;
+            _context72.next = 45;
             break;
 
           case 42:
-            _context71.prev = 42;
-            _context71.t0 = _context71["catch"](0);
-            console.log(_context71.t0);
+            _context72.prev = 42;
+            _context72.t0 = _context72["catch"](0);
+            console.log(_context72.t0);
 
           case 45:
           case "end":
-            return _context71.stop();
+            return _context72.stop();
         }
       }
-    }, _callee71, null, [[0, 42]]);
+    }, _callee72, null, [[0, 42]]);
   }));
   return _getPictures.apply(this, arguments);
 }

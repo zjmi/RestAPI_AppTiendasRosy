@@ -3958,9 +3958,64 @@ export async function getMantelesMesa(req, res) {
   }
 }
 
+export async function getDescuentos(req, res) {
+  try {
+    const getDescuentosQuery =
+      `SELECT A.object_id, A.term_taxonomy_id, A.ID, A.post_date, A.post_content, A.post_title, A.post_excerpt, A.post_status, A.post_name, A.post_type, A.price, B.quantity, C.picture_cover ` +
+      `FROM ( ` +
+      `SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as price ` +
+      `FROM  wp_j8dwsram9m_term_relationships A ` +
+      `INNER JOIN wp_j8dwsram9m_posts B ` +
+      `ON A.object_id = B.ID ` +
+      `INNER JOIN wp_j8dwsram9m_postmeta C ` +
+      `ON B.ID = C.post_id ` +
+      `WHERE  A.term_taxonomy_id = 1521 ` +
+      `AND B.post_type = "product" ` +
+      `AND B.post_status = "publish" ` +
+      `AND C.meta_key = "_price" ` +
+      `) A ` +
+      `INNER JOIN ( ` +
+      `SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as quantity ` +
+      `FROM  wp_j8dwsram9m_term_relationships A ` +
+      `INNER JOIN wp_j8dwsram9m_posts B ` +
+      `ON A.object_id = B.ID ` +
+      `INNER JOIN wp_j8dwsram9m_postmeta C ` +
+      `ON B.ID = C.post_id ` +
+      `WHERE  A.term_taxonomy_id = 1521 ` +
+      `AND B.post_type = "product" ` +
+      `AND B.post_status = "publish" ` +
+      `AND C.meta_key = "_stock" ` +
+      `) B ` +
+      `ON A.object_id = B.object_id ` +
+      `INNER JOIN ( ` +
+      `SELECT A.object_id, A.term_taxonomy_id, B.ID, B.post_date, B.post_content, B.post_title, B.post_excerpt, B.post_status, B.post_name, B.post_type, C.meta_value as picture_cover ` +
+      `FROM  wp_j8dwsram9m_term_relationships A ` +
+      `INNER JOIN wp_j8dwsram9m_posts B ` +
+      `ON A.object_id = B.ID ` +
+      `INNER JOIN wp_j8dwsram9m_postmeta C ` +
+      `ON B.ID = C.post_id ` +
+      `WHERE  A.term_taxonomy_id = 1521 ` +
+      `AND B.post_type = "product" ` +
+      `AND B.post_status = "publish" ` +
+      `AND C.meta_key = "_thumbnail_id" ` +
+      `) C ` +
+      `ON A.object_id = C.object_id`;
+    const descuentos = await rosyOnline.query(getDescuentosQuery, {
+      plain: false,
+      raw: false,
+      type: Sequelize.QueryTypes.SELECT,
+    });
+    res.json({
+      data: paginatedResults(req.query.page, req.query.limit, descuentos),
+    });
+  } catch (error) {
+    console.log(error);
+  }
+}
+
 export async function getPictures(req, res) {
   try {
-    const {ID} = req.params
+    const { ID } = req.params;
     let urlCover = "";
     let urlsCarrousel = [];
     const pictureCoverQuery =

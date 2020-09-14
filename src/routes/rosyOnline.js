@@ -72,10 +72,11 @@ import {
   getColchas,
   getEdredones,
   getMantelesMesa,
+  getDescuentos,
   getPictures,
 } from "../controllers/rosyOnline.controller";
 
-import { verifyToken } from '../middlewares/verifyToken';
+import { verifyToken } from "../middlewares/verifyToken";
 
 router.get("/ropaDama", verifyToken, getRopaDama);
 router.get("/blusasDama", verifyToken, getBlusasDama);
@@ -108,7 +109,11 @@ router.get("/shortsCaballero", verifyToken, getShortsCaballero);
 router.get("/jeansCaballero", verifyToken, getJeansCaballero);
 router.get("/pantalonesTelaCaballero", verifyToken, getPantalonesTelaCaballero);
 router.get("/pijamasCaballero", verifyToken, getPijamasCaballero);
-router.get("/tallasEspecialesCaballero", verifyToken, getTallasEspecialesCaballero);
+router.get(
+  "/tallasEspecialesCaballero",
+  verifyToken,
+  getTallasEspecialesCaballero
+);
 router.get("/ropaDeportivaCaballero", verifyToken, getRopaDeportivaCaballero);
 router.get("/ropaInviernoCaballero", verifyToken, getRopaInviernoCaballero);
 router.get("/corbatasCaballero", verifyToken, getCorbatasCaballero);
@@ -153,6 +158,8 @@ router.get("/cortinas", verifyToken, getCortinas);
 router.get("/colchas", verifyToken, getColchas);
 router.get("/edredones", verifyToken, getEdredones);
 router.get("/mantelesMesa", verifyToken, getMantelesMesa);
+
+router.get("/descuentos", verifyToken, getDescuentos);
 
 router.get("/pictures/:ID", getPictures);
 export default router;
