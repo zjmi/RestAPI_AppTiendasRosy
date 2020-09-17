@@ -4013,6 +4013,73 @@ export async function getDescuentos(req, res) {
   }
 }
 
+export async function getCoverPicture(req, res) {
+  const { ID } = req.params;
+  let urlCover = "";
+  let month = "";
+  let year = "";
+  let nameFile = "";
+  const pictureCoverQuery =
+    `SELECT meta_value ` +
+    `FROM  wp_j8dwsram9m_postmeta ` +
+    `WHERE  post_id = ${ID} ` +
+    `AND meta_key = '_thumbnail_id'`;
+  const pictureCover = await rosyOnline.query(pictureCoverQuery, {
+    plain: false,
+    raw: false,
+    type: Sequelize.QueryTypes.SELECT,
+  });
+  const releaseDateItemQuery =
+    `SELECT post_date ` + `FROM wp_j8dwsram9m_posts ` + `WHERE ID = ${ID}`;
+  const releaseDateItem = await rosyOnline.query(releaseDateItemQuery, {
+    plain: false,
+    raw: false,
+    type: Sequelize.QueryTypes.SELECT,
+  });
+  if (pictureCover.length > 0 && releaseDateItem.length > 0) {
+    const pictureCoverNameQuery =
+      `SELECT image_filename ` +
+      `FROM wp_j8dwsram9m_pmxi_images ` +
+      `WHERE attachment_id = ${pictureCover[0].meta_value} `;
+    const pictureCoverName = await rosyOnline.query(pictureCoverNameQuery, {
+      plain: false,
+      raw: false,
+      type: Sequelize.QueryTypes.SELECT,
+    });
+    if (pictureCoverName.length > 0) {
+      month = releaseDateItem[0].post_date.getMonth() + 1;
+      if (month < 10) {
+        month = releaseDateItem[0].post_date.getMonth() + 1;
+        month = "0" + month;
+      }
+      year = releaseDateItem[0].post_date.getFullYear();
+      nameFile = pictureCoverName[0].image_filename;
+      urlCover =
+        "https://4b6.96c.myftpupload.com/wp-content/uploads/" +
+        year +
+        "/" +
+        month +
+        "/" +
+        nameFile;
+    } else {
+      const urlPictureCoverQuery =
+        `SELECT guid ` +
+        `FROM wp_j8dwsram9m_posts ` +
+        `WHERE ID = ${pictureCover[0].meta_value}`;
+      const urlPictureCover = await rosyOnline.query(urlPictureCoverQuery, {
+        plain: false,
+        raw: false,
+        type: Sequelize.QueryTypes.SELECT,
+      });
+      urlCover = urlPictureCover[0].guid.replace(
+        "tiendasrosy.com",
+        "4b6.96c.myftpupload.com"
+      );
+    }
+  }
+  res.json({ data: urlCover });
+}
+
 export async function getPictures(req, res) {
   try {
     const { ID } = req.params;

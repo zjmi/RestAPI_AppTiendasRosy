@@ -74,6 +74,7 @@ import {
   getMantelesMesa,
   getDescuentos,
   getPictures,
+  getCoverPicture
 } from "../controllers/rosyOnline.controller";
 
 import { verifyToken } from "../middlewares/verifyToken";
@@ -162,4 +163,6 @@ router.get("/mantelesMesa", verifyToken, getMantelesMesa);
 router.get("/descuentos", verifyToken, getDescuentos);
 
 router.get("/pictures/:ID", getPictures);
+router.get("/pictures/cover/:ID", getCoverPicture);
+
 export default router;
