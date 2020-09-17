@@ -84,5 +84,6 @@ router.get("/edredones", _verifyToken.verifyToken, _rosyOnline.getEdredones);
 router.get("/mantelesMesa", _verifyToken.verifyToken, _rosyOnline.getMantelesMesa);
 router.get("/descuentos", _verifyToken.verifyToken, _rosyOnline.getDescuentos);
 router.get("/pictures/:ID", _rosyOnline.getPictures);
+router.get("/pictures/cover/:ID", _rosyOnline.getCoverPicture);
 var _default = router;
 exports["default"] = _default;
