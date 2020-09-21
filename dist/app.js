@@ -51,8 +51,6 @@ var _ordenPedidos = _interopRequireDefault(require("./routes/ordenPedidos"));
 
 var _infoProducto = _interopRequireDefault(require("./routes/infoProducto"));
 
-var _rosyOnline = _interopRequireDefault(require("./routes/rosyOnline"));
-
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { "default": obj }; }
 
 function _getRequireWildcardCache() { if (typeof WeakMap !== "function") return null; var cache = new WeakMap(); _getRequireWildcardCache = function _getRequireWildcardCache() { return cache; }; return cache; }
@@ -91,6 +89,5 @@ app.use("/api/cambioDolarLempiras", _cambioDolarLempiras["default"]);
 app.use("/api/carritoCompra", _carritoCompra["default"]);
 app.use("/api/carritoCompraDetalle", _carritoCompraDetalle["default"]);
 app.use("/api/carritoCompraMayoreo", _carritoCompraMayoreo["default"]);
-app.use("/api/rosyOnline", _rosyOnline["default"]);
 var _default = app;
 exports["default"] = _default;

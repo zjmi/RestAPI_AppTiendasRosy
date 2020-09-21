@@ -23,7 +23,6 @@ import carritoCompraMayoreoRoutes from "./routes/carritoCompraMayoreo";
 import picturesRoutes from "./routes/pictures";
 import ordenPedidosRoutes from "./routes/ordenPedidos";
 import infoProductoRoutes from "./routes/infoProducto";
-import rosyOnlineRoutes from "./routes/rosyOnline";
 
 // initialization
 const app = express();
@@ -59,6 +58,5 @@ app.use("/api/cambioDolarLempiras", cambioDolarLempirasRouter);
 app.use("/api/carritoCompra", carritoCompraRoutes);
 app.use("/api/carritoCompraDetalle", carritoCompraDetalleRoutes);
 app.use("/api/carritoCompraMayoreo", carritoCompraMayoreoRoutes);
-app.use("/api/rosyOnline", rosyOnlineRoutes);
 
 export default app;
